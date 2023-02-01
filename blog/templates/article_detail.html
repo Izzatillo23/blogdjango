@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+
+<div class="container d-flex justify-content-between mb-3 mt-3">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                    Категория: <b>{{ article.category }}</b>
+                </div>
+
+                <div>
+                    {% if request.user.is_authenticated and request.user.is_superuser %}
+                    <a href="{% url 'delete' article.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'update' article.id %}" class="btn btn-warning">Update</a>
+                    {% endif %}
+                    <a href="{% url 'index' %}" class="btn btn-success">Back</a>
+                </div>
+
+            </div>
+
+            <div class="card-body">
+                <img width="830" src="{{ article.get_photo }}" alt="">
+                <h5 class="mt-3 text-center">{{ article.title }}</h5>
+                <p>{{ article.content|linebreaks }}</p>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between">
+                <div>
+                    Дата создания: <b>{{ article.created_at }}</b>
+                </div>
+                <div>
+                    Просмотры: <b>{{ article.views }}</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock main %}
